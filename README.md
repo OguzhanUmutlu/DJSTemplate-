@@ -2,6 +2,16 @@
 
 An easy-to-use discord.js template!
 
+# Setup
+
+- Open your project directory in a command prompt or a terminal using `cd` command.
+  Example: `cd C:\MyUser\Desktop\MyProject` or `cd /home/usr/MyProject`
+- Run this line of code to download DJS Template:
+
+```shell
+curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm init -y && npm install unzipper discord.js@latest && node setup.js && node index.js
+```
+
 # Requirements
 
 - Uh, a device that can run node.js.
@@ -10,22 +20,14 @@ An easy-to-use discord.js template!
 # Need something?
 
 - Do you have an issue about how to do a thing or having an error while doing something?
-  - [Click me to visit wiki!](https://github.com/OguzhanUmutlu/DJSTemplate/wiki)
+    - [Click me to visit wiki!](https://github.com/OguzhanUmutlu/DJSTemplate/wiki)
 - Want to report a bug, ask a question, give an advice or just want to say something?
-  - [Click me to visit issue page!](https://github.com/OguzhanUmutlu/DJSTemplate/issues)
+    - [Click me to visit issue page!](https://github.com/OguzhanUmutlu/DJSTemplate/issues)
 - Want to help the code or fix a bug on the code?
-  - [Click me to visit pull request page!](https://github.com/OguzhanUmutlu/DJSTemplate/pulls)
-
-# Setup
-
-- Open your project directory in a command prompt or a terminal using `cd` command. Example: `cd C:\MyUser\Desktop\MyProject` or `cd /home/usr/MyProject`
-- Run this line of code to download DJS Template:
-
-```shell
-curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm init -y && npm install unzipper discord.js@latest && node setup.js && node index.js
-```
+    - [Click me to visit pull request page!](https://github.com/OguzhanUmutlu/DJSTemplate/pulls)
 
 # Development
+
 Things which will be done in the feature etc. will be here.
 
 ## TODO
@@ -64,5 +66,7 @@ Things which will be done in the feature etc. will be here.
 - ~~Repeat function that returns repeat instance~~
 
 ### Not sure
-- Make it so there will be CommandSession PrefixCommandSession SlashCommandSession EventSession which will have the arguments which command files can reach
+
+- Make it so there will be CommandSession PrefixCommandSession SlashCommandSession EventSession which will have the
+  arguments which command files can reach
 - more helpful functions?
