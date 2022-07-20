@@ -7,6 +7,15 @@ An easy-to-use discord.js template!
 - Uh, a device that can run node.js.
 - Node version `>= 17.5.0`
 
+# Need something?
+
+- Do you have an issue about how to do a thing or having an error while doing something?
+  - [Click me to visit wiki!](https://github.com/OguzhanUmutlu/DJSTemplate/wiki)
+- Want to report a bug, ask a question, give an advice or just want to say something?
+  - [Click me to visit issue page!](https://github.com/OguzhanUmutlu/DJSTemplate/issues)
+- Want to help the code or fix a bug on the code?
+  - [Click me to visit pull request page!](https://github.com/OguzhanUmutlu/DJSTemplate/pulls)
+
 # Setup
 
 - Open your project directory in a command prompt or a terminal using `cd` command. Example: `cd C:\MyUser\Desktop\MyProject` or `cd /home/usr/MyProject`
