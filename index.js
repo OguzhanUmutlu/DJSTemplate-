@@ -35,6 +35,80 @@ global.executeTerminalCommand = command => new Promise(resolve => {
     });
 });
 global.mkdir = f => new Promise(r => fs.mkdir(f, {recursive: true}, r));
+const stdin = process.stdin;
+stdin.setRawMode(true);
+let _stdinData = [];
+global.ConsoleReader = class ConsoleReader {
+    static resumeStdin() {
+        stdin.resume();
+        stdin.setEncoding("utf8");
+    };
+
+    static pauseStdin() {
+        stdin.pause();
+    }
+
+    static onStdinData(callback) {
+        _stdinData.push(callback);
+        stdin.on("data", callback);
+        return {
+            remove: () => {
+                _stdinData.splice(_stdinData.indexOf(callback), 1);
+                stdin.off("data", callback);
+            }
+        };
+    };
+
+    static
+    removeStdinCallbacks = () => {
+        _stdinData.forEach(i => stdin.removeListener("data", i));
+        _stdinData = [];
+    };
+
+    static readLine({show = false} = {}) {
+        return new Promise(resolve => {
+            this.resumeStdin();
+            let dat = "";
+            const rem = this.onStdinData(data => {
+                if (data === "\x03") return process.exit();
+                if (data === "\n" || data === "\r") {
+                    this.pauseStdin();
+                    rem.remove();
+                    resolve(dat);
+                } else if (data === "\b") {
+                    if (dat.length > 0) {
+                        dat = dat.substring(0, dat.length - 1);
+                        if (show) process.stdout.write("\b ");
+                    }
+                } else dat += data;
+                if (show) process.stdout.write(data);
+            });
+        });
+    };
+
+    static readKey({show = false, amount = 1} = {}) {
+        return new Promise(resolve => {
+            this.resumeStdin();
+            let dat = "";
+            const rem = this.onStdinData(data => {
+                if (data === "\x03") return process.exit();
+                if (data === "\b") {
+                    if (dat.length > 0) {
+                        dat = dat.substring(0, dat.length - 1);
+                        if (show) process.stdout.write("\b ");
+                    }
+                } else dat += data;
+                if (dat.length >= amount) {
+                    this.pauseStdin();
+                    rem.remove();
+                    resolve(dat);
+                }
+                if (show) process.stdout.write(data);
+            });
+        });
+    };
+};
+stdin.setRawMode(true);
 (async () => {
     if (await new Promise(r => require("dns").lookup("google.com", err => r(err && err.code === "ENOTFOUND")))) return printer.error("You don't have internet connection!");
     const _dr = __dirname;
@@ -54,16 +128,24 @@ global.mkdir = f => new Promise(r => fs.mkdir(f, {recursive: true}, r));
             printer.clear();
             printer.warn("Couldn't fetch the latest version of the template!")
         }
-        if (config.experimental["update-check"]["readline"]) await new Promise(r => require("readline").createInterface({
-            input: process.stdin,
-            output: process.stdout
-        }).question("Press enter to continue...", r));
+        if (config.experimental["update-check"]["readline"]) {
+            process.stdout.write("Press any key to continue...");
+            await ConsoleReader.readKey();
+        }
     }
     printer.clear();
     const {Client, Guild, InteractionType} = Discord;
     global.client = new Client({intents: [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536]});
     printer.info("Connecting to Discord...");
     const ready = new Promise(r => client.once("ready", r));
+    while (!config.token) {
+        printer.clear();
+        printer.constructor.line = "";
+        printer.info("Please enter your Discord token: ");
+        printer.constructor.line = "\n";
+        config.token = await ConsoleReader.readLine({show: false});
+        fs.writeFileSync(path.join(__dirname, "config.json"), JSON.stringify(config, null, 2));
+    }
     const loginResponse = await new Promise(r => client.login(config.token).then(_ => r({success: true})).catch(error => r({error})));
     if (loginResponse.error) {
         switch (loginResponse.error.code) {
@@ -78,10 +160,10 @@ global.mkdir = f => new Promise(r => fs.mkdir(f, {recursive: true}, r));
     const ______ = config.token;
     if (config["hide-token"]) {
         delete config.token;
-        fs.writeFileSync("./config.json", JSON.stringify(config, null, 2));
+        fs.writeFileSync(path.join(__dirname, "config.json"), JSON.stringify(config, null, 2));
         const endProcess = _ => {
             config.token = ______;
-            fs.writeFileSync("./config.json", JSON.stringify(config, null, 2));
+            fs.writeFileSync(path.join(__dirname, "config.json"), JSON.stringify(config, null, 2));
             process.exit(0);
         };
         process.on("beforeExit", endProcess);

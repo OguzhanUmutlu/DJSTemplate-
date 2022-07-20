@@ -69,5 +69,5 @@
   "tmp": "tmp",
   "no-crash": true,
   "hide-token": false,
-  "token": "TOKEN HERE"
+  "token": ""
 }

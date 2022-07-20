@@ -22,11 +22,12 @@ class Printer {
     static BgMagenta = "\x1b[45m";
     static BgCyan = "\x1b[46m";
     static BgWhite = "\x1b[47m";
-    static cns = console;
+
+    static line = "\n";
 
     static print(...string) {
         if (!require("./config.json").printer.print) return;
-        string.forEach(string => Printer.cns.info(string));
+        string.forEach(string => process.stdout.write(string + Printer.line));
     };
 
     /**
@@ -76,7 +77,7 @@ class Printer {
     };
 
     clear() {
-        Printer.cns.clear();
+        process.stdout.write("\u001b[2J\u001b[0;0H");
     };
 }
 

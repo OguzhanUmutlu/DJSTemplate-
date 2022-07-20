@@ -2,6 +2,11 @@
 
 An easy-to-use discord.js template!
 
+# Requirements
+
+- Uh, a device that can run node.js.
+- Node version `>= 17.5.0`
+
 # Setup
 
 - Open your project directory in a command prompt or a terminal using `cd` command. Example: `cd C:\MyUser\Desktop\MyProject` or `cd /home/usr/MyProject`
