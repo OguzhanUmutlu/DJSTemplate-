@@ -47,7 +47,7 @@ global.mkdir = f => new Promise(r => fs.mkdir(f, r));
         try {
             latestTemplate = await (await fetch(config.experimental["update-check"].provider)).json();
             printer.clear();
-            const currentVersion = require("./package.json")["template-version"] || 1;
+            const currentVersion = require("./package.json")["template-version"] ?? 1;
             if (latestTemplate.version > currentVersion) printer.warn(...latestTemplate["message"].map(i => i.replaceAll("%latest.version%", latestTemplate.version).replaceAll("%current.version%", currentVersion)));
             else printer.notice("Your template is up to date!");
         } catch (e) {
