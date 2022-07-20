@@ -13,7 +13,7 @@ An easy-to-use discord.js template!
 - Run this line of code to download DJS Template:
 
 ```shell
-curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm init -y && npm install unzipper discord.js@latest && node setup.js
+curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm init -y && npm install unzipper discord.js@latest && node setup.js && node index.js
 ```
 
 # Development

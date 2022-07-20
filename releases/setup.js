@@ -1,4 +1,4 @@
-console.log("Setup V0.0.1");
+console.log("Setup V0.0.2");
 (async () => {
     const http = require("https");
     const https = require("https");
@@ -43,8 +43,11 @@ console.log("Setup V0.0.1");
             await new Promise(r => fs.rm(path.join(__dirname, "update.zip"), {recursive: true}, r));
             await new Promise(r => fs.rm(__filename, {recursive: true}, r));
             console.log("Extracted files!");
-            console.log("You can now run the project by running the following command:");
-            console.log("node index.js");
+            process.stdout.write("Press any key to continue...");
+            const {stdin} = process;
+            stdin.setRawMode(true);
+            stdin.resume();
+            stdin.on("data", () => process.exit());
         }).catch(err => {
             console.log("Couldn't extract files!");
             console.error(err);

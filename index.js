@@ -108,7 +108,6 @@ global.ConsoleReader = class ConsoleReader {
         });
     };
 };
-stdin.setRawMode(true);
 (async () => {
     if (await new Promise(r => require("dns").lookup("google.com", err => r(err && err.code === "ENOTFOUND")))) return printer.error("You don't have internet connection!");
     const _dr = __dirname;
