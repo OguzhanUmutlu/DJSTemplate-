@@ -1,0 +1,73 @@
+{
+  "errors": {
+    "log": true,
+    "log-details": true,
+    "save-details": {
+      "enabled": true,
+      "directory": "errors",
+      "file-format": "{time}-{file.name}.txt",
+      "save-format": "File: {file.name}.{file.extension}\nCommand: {command.name}\nExecutor: {executor.username}#{executor.discriminator}\nExecutor ID: {executor.id}\nError: {error}"
+    }
+  },
+  "prefixCommands": {
+    "default-prefix": "!",
+    "directory": "commands/prefix",
+    "auto-reload": {
+      "enabled": true,
+      "interval": 2000,
+      "log": true
+    }
+  },
+  "slashCommands": {
+    "directory": "commands/slash",
+    "auto-reload": {
+      "enabled": true,
+      "interval": 2000,
+      "log": true
+    }
+  },
+  "events": {
+    "directory": "events",
+    "auto-reload": {
+      "enabled": true,
+      "interval": 2000,
+      "log": true
+    }
+  },
+  "language": {
+    "directory": "languages",
+    "auto-reload": {
+      "enabled": true,
+      "interval": 2000,
+      "log": true
+    }
+  },
+  "config": {
+    "auto-reload": {
+      "enabled": true,
+      "interval": 2000,
+      "log": true
+    }
+  },
+  "printer": {
+    "print": true,
+    "error": true,
+    "info": true,
+    "notice": true,
+    "warn": true,
+    "debug": true
+  },
+  "experimental": {
+    "command-run-method": "file",
+    "file-eval-remove": true,
+    "update-check": {
+      "enabled": true,
+      "provider": "https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/UPDATE.json",
+      "readline": true
+    }
+  },
+  "tmp": "tmp",
+  "no-crash": true,
+  "hide-token": false,
+  "token": "TOKEN HERE"
+}

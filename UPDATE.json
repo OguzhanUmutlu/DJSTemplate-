@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "update-message": [
+    "----------------- V14 Template -----------------",
+    "A new update has been detected!",
+    "Your Version: %current.version%",
+    "Latest Version: %latest.version%",
+    "Changelog: https://github.com/OguzhanUmutlu/DJSTemplate/CHANGELOG.md",
+    "Download: https://github.com/OguzhanUmutlu/DJSTemplate",
+    "----------------- V14 Template -----------------"
+  ]
+}

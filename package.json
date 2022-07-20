@@ -1,0 +1,33 @@
+{
+  "name": "djstemplate",
+  "version": "1.0.0",
+  "template-version": 1,
+  "description": "An easy to use discord.js template!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OguzhanUmutlu/DJSTemplate.git"
+  },
+  "keywords": [
+    "javascript",
+    "js",
+    "node",
+    "npm",
+    "discord",
+    "discordjs",
+    "slash",
+    "template"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OguzhanUmutlu/DJSTemplate/issues"
+  },
+  "homepage": "https://github.com/OguzhanUmutlu/DJSTemplate#readme",
+  "dependencies": {
+    "discord.js": "^14.0.3"
+  }
+}
