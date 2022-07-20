@@ -2,6 +2,12 @@
 
 An easy-to-use discord.js template!
 
+# Setup
+
+- Open your project directory in a command prompt or a terminal using `cd` command. Example: `cd C:\MyUser\Desktop\MyProject` or `cd /home/usr/MyProject`
+- Run this line of code to download DJS Template: `curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm init -y && npm install unzipper discord.js@latest && node setup.js`
+- 
+
 # Development
 Things which will be done in the feature etc. will be here.
 
