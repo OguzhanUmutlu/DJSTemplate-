@@ -34,7 +34,7 @@ global.executeTerminalCommand = command => new Promise(resolve => {
         resolve({success: true});
     });
 });
-global.mkdir = f => new Promise(r => fs.mkdir(f, r));
+global.mkdir = f => new Promise(r => fs.mkdir(f, {recursive: true}, r));
 (async () => {
     if (await new Promise(r => require("dns").lookup("google.com", err => r(err && err.code === "ENOTFOUND")))) return printer.error("You don't have internet connection!");
     const _dr = __dirname;
@@ -98,7 +98,7 @@ global.mkdir = f => new Promise(r => fs.mkdir(f, r));
     await mkdir(prefDir);
     const prefFiles = fs.readdirSync(prefDir).filter(i => i.split(".").length === 2 && i.endsWith(".js"));
     const slashDir = path.join(__dirname, config.slashCommands.directory);
-    await mkdir(prefDir);
+    await mkdir(slashDir);
     const slashFiles = fs.readdirSync(slashDir).filter(i => i.split(".").length === 2 && i.endsWith(".js"));
     const eventDir = path.join(__dirname, config.events.directory);
     await mkdir(eventDir);
