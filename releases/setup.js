@@ -6,16 +6,25 @@ console.log("Setup V0.0.3");
     const fs = require("fs");
     const path = require("path");
     const ZIP = require("zip");
-    const download = (url, file) => new Promise((resolve, reject) => {
-        const stream = fs.createWriteStream(file);
+    global.executeTerminalCommand = command => new Promise(resolve => {
+        require("child_process").exec(command, err => {
+            if (err) return resolve({err});
+            resolve({success: true});
+        });
+    });
+    /*const download = (url, file) => new Promise(async (resolve, reject) => {
+        const stream = fs.createWriteStream(file, {
+            encoding: null
+        });
         const htt = url.startsWith("https") ? https : http;
         htt.get(url, res => {
             res.pipe(stream);
-            res.on("end", () => resolve());
+            res.on("close", () => resolve());
             res.on("error", err => reject(err));
         }).on("error", err => reject(err));
-    });
-    const get = url => new Promise((resolve, reject) => {
+    });*/
+
+    const get = url => new Promise(async (resolve, reject) => {
         const htt = url.startsWith("https") ? https : http;
         htt.get(url, res => {
             let data = "";
@@ -95,7 +104,7 @@ console.log("Setup V0.0.3");
             return;
         }
         const unzip = async (from, to, cb) => {
-            const data = Buffer.from(fs.readFileSync(from));
+            const data = fs.readFileSync(from);
             const reader = ZIP.Reader(data);
             reader.toObject();
             const list = {};
@@ -104,24 +113,27 @@ console.log("Setup V0.0.3");
                 const file_name = Object.keys(list)[i];
                 const full_file_name = path.join(to, file_name);
                 const entry = list[file_name];
+                if (!(await cb({file_name, full_file_name, entry}))) continue;
+                await new Promise(r => fs.mkdir(path.dirname(full_file_name), {recursive: true}, r));
+                if (fs.existsSync(full_file_name)) fs.rmSync(full_file_name, {recursive: true});
                 if (entry.isFile()) {
-                    if (await cb({file_name, full_file_name, entry})) {
-                        if (fs.existsSync(full_file_name)) fs.rmSync(full_file_name, {recursive: true});
-                        fs.writeFileSync(full_file_name, entry.getData());
-                    }
+                    fs.writeFileSync(full_file_name, entry.getData());
                 } else {
-                    if (await cb({file_name, full_file_name, entry})) {
-                        if (fs.existsSync(full_file_name)) fs.rmSync(full_file_name, {recursive: true});
-                        fs.mkdirSync(full_file_name);
-                    }
+                    fs.mkdirSync(full_file_name);
                 }
             }
         }
         //const unzip = (file, to) => new Promise(async (resolve, reject) => fs.createReadStream(file).pipe(require("unzipper").Extract({path: to})).on("error", reject).on("close", resolve));
-        const downErr = await download(json["latest"], path.join(__dirname, "update.zip"));
-        if (downErr) {
+
+        //const downErr = await download(json["latest"], path.join(__dirname, "update.zip"));
+        const down = await executeTerminalCommand(`curl ${JSON.stringify(json["latest"])} -o ./update.zip`);
+        //console.log(fs.readFileSync("./update2.zip").toString().length)
+        //if(downErr) {
+        // TODO: make this with node methods instead of the terminal
+        if (down.err || !down.success) {
             console.log("Couldn't get the latest version info!");
-            console.error(downErr);
+            console.error(down.err);
+            //console.error(downErr);
             return;
         }
         stdin.setRawMode(true);
@@ -131,6 +143,7 @@ console.log("Setup V0.0.3");
                 while (!["y", "n"].includes(r || "")) {
                     process.stdout.write("Do you want to update an already existing " + (entry.isFile() ? "file" : "directory") + " located in \"" + full_file_name + "\"? (y/n) ");
                     r = await ConsoleReader.readLine({show: true});
+                    process.stdout.write("\n");
                 }
                 return r === "y";
             }
