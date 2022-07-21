@@ -125,7 +125,7 @@ global.ConsoleReader = class ConsoleReader {
                 printer.constructor.line = "";
                 printer.info("Do you want to update the template automatically? (y/n) ");
                 printer.constructor.line = "\n";
-                const updateRes = await ConsoleReader.readLine({show: false});
+                const updateRes = await ConsoleReader.readLine({show: true});
                 printer.clear();
                 if (updateRes === "y") {
                     await executeTerminalCommand(`https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm install zip discord.js@latest`);
