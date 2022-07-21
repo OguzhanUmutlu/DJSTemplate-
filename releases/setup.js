@@ -5,7 +5,7 @@ const ZIP = require("zip");
 const path = require("path");
 const isRequire = require.main !== module;
 console.clear();
-console.log("Setup V0.0.3");
+console.log("Setup V0.0.4");
 module.exports = new Promise(async resFile => {
     global.executeTerminalCommand = command => new Promise(resolve => {
         require("child_process").exec(command, err => {
@@ -156,6 +156,7 @@ module.exports = new Promise(async resFile => {
         console.log("Extracted files!");
         process.stdout.write("Press any key to continue...");
         ConsoleReader.resumeStdin();
+        resFile();
         ConsoleReader.onStdinData(process.exit);
     }).catch(err => {
         console.log("Couldn't get the latest version info. Please check your internet connection.");

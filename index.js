@@ -150,7 +150,7 @@ global.ConsoleReader = class ConsoleReader {
     while (!config.token) {
         printer.clear();
         printer.constructor.line = "";
-        printer.info("Please enter your Discord token: ");
+        printer.info("Please enter your bot's Discord token: ");
         printer.constructor.line = "\n";
         config.token = await ConsoleReader.readLine({show: false});
         printer.clear();

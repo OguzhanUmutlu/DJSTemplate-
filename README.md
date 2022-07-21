@@ -9,12 +9,12 @@ An easy-to-use discord.js template!
 - Run this line of code to download DJS Template:
   - For windows:
 ```shell
-curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm init -y && npm install zip discord.js@latest && node setup.js && npm install && node index.js
+curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.cmd | cmd
 ```
   - For mac/linux:
 ```shell
-curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.sh -o setup.sh | sh
-```
+curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.sh | sh
+``` 
 
 # Requirements
 
