@@ -70,7 +70,7 @@ global.ConsoleReader = class ConsoleReader {
             let dat = "";
             const rem = this.onStdinData(data => {
                 if (data === "\x03") return process.exit();
-                if (data === "\n" || data === "\r") {
+                if (data[0] === "\n" || data[0] === "\r") {
                     this.pauseStdin();
                     rem.remove();
                     resolve(dat);
@@ -127,7 +127,7 @@ global.ConsoleReader = class ConsoleReader {
                 printer.constructor.line = "\n";
                 const updateRes = await ConsoleReader.readLine({show: false});
                 printer.clear();
-                if(updateRes === "y") {
+                if (updateRes === "y") {
                     await executeTerminalCommand(`https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm install zip discord.js@latest`);
                     await require("./setup.js");
                     process.exit();

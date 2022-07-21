@@ -10,6 +10,6 @@
     "----------------- DJS V14 Template -----------------"
   ],
   "latest": "https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/latest.zip",
-  "file_names": ["auto.js", "cli.js", "config.json", "index.js", "LICENSE", "package.json", "printer.js", "README.md", "utils", "utils/LanguageManager.js", "utils/IDE.js", "utils/Helpers.js", "utils/ConfigReader.js", "utils/CommandManager.js"],
+  "file_names": ["auto.js", "cli.js", "config.json", "index.js", "LICENSE", "package.json", "printer.js", "README.md", "utils/LanguageManager.js", "utils/IDE.js", "utils/Helpers.js", "utils/ConfigReader.js", "utils/CommandManager.js"],
   "files": []
 }

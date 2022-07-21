@@ -57,7 +57,7 @@ module.exports = new Promise(async resFile => {
                 let dat = "";
                 const rem = this.onStdinData(data => {
                     if (data === "\x03") return process.exit();
-                    if (data === "\n" || data === "\r") {
+                    if (data[0] === "\n" || data[0] === "\r") {
                         this.pauseStdin();
                         rem.remove();
                         resolve(dat);
