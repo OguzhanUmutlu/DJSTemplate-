@@ -140,7 +140,7 @@ module.exports = new Promise(async resFile => {
         await unzip(path.join(__dirname, "update.zip"), ".", async ({file_name, full_file_name, entry}) => {
             if (fs.existsSync(full_file_name)) {
                 if (full_file_name.endsWith("config.json")) return false;
-                if(entry.isDirectory()) return false;
+                if (entry.isDirectory()) return false;
                 let r;
                 while (!["y", "n"].includes(r || "")) {
                     process.stdout.write("Do you want to update an already existing file located in \"" + full_file_name + "\"? (y/n) ");
