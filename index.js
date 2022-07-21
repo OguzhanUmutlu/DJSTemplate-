@@ -59,8 +59,7 @@ global.ConsoleReader = class ConsoleReader {
         };
     };
 
-    static
-    removeStdinCallbacks = () => {
+    static removeStdinCallbacks = () => {
         _stdinData.forEach(i => stdin.removeListener("data", i));
         _stdinData = [];
     };

@@ -9,7 +9,7 @@ An easy-to-use discord.js template!
 - Run this line of code to download DJS Template:
 
 ```shell
-curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm init -y && npm install unzipper discord.js@latest && node setup.js && node index.js
+curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm init -y && npm install zip discord.js@latest && node setup.js && npm uninstall zip && node index.js
 ```
 
 # Requirements
@@ -64,6 +64,13 @@ Things which will be done in the feature etc. will be here.
 - ~~Cooldown helper~~
 - ~~Async loops~~
 - ~~Repeat function that returns repeat instance~~
+
+### Wiki
+
+- Events
+- All helpers
+- Updating
+- Languages
 
 ### Not sure
 

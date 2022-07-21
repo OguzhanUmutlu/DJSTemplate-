@@ -155,9 +155,10 @@ const ___________ = (str, __________variables) => eval(str);
 
         async run(message) {
             const prefix = getPrefixFromGuild(message.message);
+            const language = getLanguageFromGuild(message.guild);
             const {channel, guild} = message;
             return await super.run({
-                message, channel, guild, prefix,
+                message, channel, guild, prefix, language,
                 args: message.content.substring(prefix.length).split(" ").slice(1),
                 command: this
             });
@@ -183,6 +184,7 @@ const ___________ = (str, __________variables) => eval(str);
                 return;
             }
             const conf = ConfigReader.read(data, path.basename(file));
+            if (!conf.name) return printer.error("Failed to load prefixed command in " + file + " because the command doesn't have the \"name\" property in its config.");
             alertCache[file] = false;
             return new PrefixCommand(file, data, conf);
         };

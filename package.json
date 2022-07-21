@@ -29,5 +29,9 @@
   "homepage": "https://github.com/OguzhanUmutlu/DJSTemplate#readme",
   "dependencies": {
     "discord.js": "^14.0.3"
+  },
+  "devDependencies": {
+    "unzipper": "^0.10.11",
+    "zip": "^1.2.0"
   }
 }
