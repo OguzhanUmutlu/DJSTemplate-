@@ -64,7 +64,8 @@
       "enabled": true,
       "provider": "https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/UPDATE.json",
       "readline": true
-    }
+    },
+    "dns-check": "google.com"
   },
   "tmp": "tmp",
   "no-crash": true,

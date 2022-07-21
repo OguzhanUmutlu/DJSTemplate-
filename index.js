@@ -108,7 +108,7 @@ global.ConsoleReader = class ConsoleReader {
     };
 };
 (async () => {
-    if (await new Promise(r => require("dns").lookup("google.com", err => r(err && err.code === "ENOTFOUND")))) return printer.error("You don't have internet connection!");
+    if (await new Promise(r => require("dns").lookup(config.experimental["dns-check"] || "google.com", err => r(err && err.code === "ENOTFOUND")))) return printer.error("You don't have internet connection!");
     const _dr = __dirname;
     global.rmTmp = () => new Promise(r => fs.rm(path.join(_dr, config.tmp), {recursive: true}, r));
     global.mkTmp = () => mkdir(path.join(_dr, config.tmp));
@@ -124,7 +124,7 @@ global.ConsoleReader = class ConsoleReader {
             if (latestTemplate.version > currentVersion) {
                 //printer.warn(...latestTemplate["message"].map(i => i.replaceAll("%latest.version%", latestTemplate.version).replaceAll("%current.version%", currentVersion)));
                 printer.constructor.line = "";
-                printer.info("Do you want to update the template automatically? (y/n) ");
+                printer.info("There is an update in template, do you want to update the template automatically? (y/n) ");
                 printer.constructor.line = "\n";
                 const updateRes = await ConsoleReader.readLine({show: true});
                 printer.clear();
