@@ -119,6 +119,7 @@ global.ConsoleReader = class ConsoleReader {
         try {
             latestTemplate = await (await fetch(config.experimental["update-check"].provider)).json();
             printer.clear();
+            console.log(latestTemplate);
             const currentVersion = require("./package.json")["template-version"] ?? 1;
             if (latestTemplate.version > currentVersion) {
                 //printer.warn(...latestTemplate["message"].map(i => i.replaceAll("%latest.version%", latestTemplate.version).replaceAll("%current.version%", currentVersion)));
