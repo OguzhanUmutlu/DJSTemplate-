@@ -208,16 +208,64 @@ const ___________ = (str, __________variables) => eval(str);
             const {guild, channel} = interaction;
             const language = LanguageManager.languages[getLanguageFromGuild(guild)];
             const structure = this.structure(guild, language);
-            const args = {};
-            const optionData = interaction.options.data;
-            const subCommand = interaction.options.getSubcommand(false);
-            const subCommandGroup = interaction.options.getSubcommandGroup(false);
-            for (let i = 0; i < optionData.length; i++) {
-                const opt = optionData[i];
-                args[opt.name] = opt.value;
+            let args, subCommand, subCommandGroup;
+            if (interaction["_message"]) {
+                args = {};
+                /*** @type {string[]} */
+                const arg = interaction["_arg"];
+                const prm = arg.slice(1).join(" ");
+                let argsArray = [];
+                let m = "";
+                let s = null;
+                for (let i = 0; i < prm.length; i++) {
+                    const c = prm[i];
+                    if (s) {
+                        if (c === s) {
+                            s = null;
+                            if (m) argsArray.push(m);
+                            m = "";
+                        } else m += c;
+                    } else {
+                        if (c === "\"") {
+                            s = c;
+                            if (m) argsArray.push(m);
+                            m = "";
+                        } else if (c === " ") {
+                            if (m) argsArray.push(m);
+                            m = "";
+                        } else m += c;
+                    }
+                }
+                if (m) argsArray.push(m);
+                const strOpt = structure.toJSON().options;
+                if (strOpt.some(i => i.type === 1 || i.type === 2)) {
+                    // sub command only
+                    const foundAsSubCommandGroup = strOpt.find(i => i.type === 2 && i.name === argsArray[0] && i.options.some(a => a.type === 1 && a.name === argsArray[1]));
+                    const foundAsSubCommand = strOpt.find(i => i.type === 1 && i.name === argsArray[0]);
+                    if (foundAsSubCommandGroup) {
+                        subCommandGroup = foundAsSubCommandGroup.name;
+                        subCommand = foundAsSubCommandGroup.find(i => i.type === 1 && i.name === argsArray[1])?.name;
+                        argsArray = argsArray.slice(2);
+                    } else if (foundAsSubCommand) {
+                        subCommand = foundAsSubCommand.name;
+                        argsArray = argsArray.slice(1);
+                    }
+                }
+                argsArray.forEach((i, j) => strOpt[j] ? args[strOpt[j].name] = i : args[j] = i);
+                // TODO: a helper that checks things like option types, min-max ranges etc.
+            } else {
+                args = {};
+                const optionData = interaction.options.data;
+                subCommand = interaction.options.getSubcommand(false);
+                subCommandGroup = interaction.options.getSubcommandGroup(false);
+                for (let i = 0; i < optionData.length; i++) {
+                    const opt = optionData[i];
+                    args[opt.name] = opt.value;
+                }
             }
             return await super.run({
-                interaction, channel, guild, subCommand, subCommandGroup, args, language, structure,
+                interaction, channel, guild, language, structure,
+                subCommand, subCommandGroup, args,
                 command: this
             });
         };

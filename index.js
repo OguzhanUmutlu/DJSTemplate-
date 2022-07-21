@@ -136,7 +136,6 @@ global.ConsoleReader = class ConsoleReader {
         } catch (e) {
             printer.clear();
             printer.warn("Couldn't fetch the latest version of the template!");
-            console.log(e)
         }
         if (config.experimental["update-check"]["readline"]) {
             process.stdout.write("Press any key to continue...");
@@ -240,10 +239,137 @@ global.ConsoleReader = class ConsoleReader {
         if (!message.content.startsWith(prefix)) return;
         const arg = message.content.substring(prefix.length).split(" ");
         const commandName = arg[0];
-        const commands = Object.values(PrefixCommandManager.commands).filter(cmd => cmd.conf.enabled && (cmd.conf.name === commandName || (cmd.conf["aliases"] || "").split(",").includes(commandName)) && (cmd.conf["dmAllowed"] || !!message.guild) && (cmd.conf["botAllowed"] || !message.author.bot));
+        const commands = [
+            ...Object.values(PrefixCommandManager.commands).filter(cmd => cmd.conf.enabled && (cmd.conf.name === commandName || (cmd.conf["aliases"] || "").split(",").includes(commandName)) && (cmd.conf["dmAllowed"] || !!message.guild) && (cmd.conf["botAllowed"] || !message.author.bot)),
+            ...Object.values(SlashCommandManager.commands).filter(cmd => cmd.conf["prefix-enabled"] && (cmd.conf["prefix-name"] === commandName || (cmd.conf["prefix-aliases"] || "").split(",").includes(commandName)) && (cmd.conf["prefix-dmAllowed"] || !!message.guild) && (cmd.conf["prefix-botAllowed"] || !message.author.bot))
+        ];
         for (let i = 0; i < commands.length; i++) {
             const cmd = commands[i];
-            const result = await cmd.run(message);
+            let runArg = message;
+            if (cmd instanceof SlashCommand) {
+                runArg = new (class {
+                    channelId = message.channelId;
+                    commandId = null;
+                    commandName = commandName;
+                    commandType = "prefix";
+                    commandGuildId = message.guildId || null;
+                    deferred = false;
+                    ephemeral = false;
+                    replied = false;
+                    _reply = null;
+                    webhook = null;
+                    applicationId = null;
+                    id = message.id;
+                    member = message.member;
+                    user = message.author;
+                    version = null;
+                    appPermissions = null;
+                    memberPermissions = null;
+                    locale = null;
+                    guildLocale = message.guild.preferredLocale;
+                    _message = message;
+                    _arg = arg;
+                    client = client;
+                    options = "TODO: implement this too.";
+
+                    inGuild() {
+                        return !!this.commandGuildId;
+                    };
+
+                    inCachedGuild() {
+                        return !!client.guilds.cache.get(this.commandGuildId);
+                    };
+
+                    inRawGuild() {
+                        return this.inGuild();
+                    };
+
+                    deferReply() {
+                    };
+
+                    async deleteReply() {
+                        if (this.replied && this._reply) await this._reply.delete();
+                        this._reply = null;
+                    };
+
+                    async editReply(t) {
+                        if (this.replied && this._reply) await this._reply.edit(t);
+                    };
+
+                    fetchReply() {
+                        return this._reply;
+                    };
+
+                    async followUp(t) {
+                        return await message.reply(t);
+                    };
+
+                    async reply(t) {
+                        this._reply = await this.followUp(t);
+                        this.replied = true;
+                    };
+
+                    showModal() {
+                    };
+
+                    awaitModalSubmit() {
+                        return null; // NOTE: BE SURE THAT YOU CHECKED IF IT'S NULL IN YOUR COMMANDS.
+                    };
+
+                    transformOption() {
+                        return null; // NOTE: BE SURE THAT YOU CHECKED IF IT'S NULL IN YOUR COMMANDS.
+                    };
+
+                    transformResolved() {
+                        return null; // NOTE: BE SURE THAT YOU CHECKED IF IT'S NULL IN YOUR COMMANDS.
+                    };
+
+                    get createdAt() {
+                        return message.createdAt;
+                    };
+
+                    get createdTimestamp() {
+                        return message.createdTimestamp;
+                    };
+
+                    get guild() {
+                        return message.guild;
+                    };
+
+                    isButton() {
+                        return false;
+                    };
+
+                    isChatInputCommand() {
+                        return true;
+                    };
+
+                    isContextMenuCommand() {
+                        return false;
+                    };
+
+                    isMessageContextMenuCommand() {
+                        return false;
+                    };
+
+                    isUserContextMenuCommand() {
+                        return false;
+                    };
+
+                    isSelectMenu() {
+                        return false;
+                    };
+
+                    isRepliable() {
+                        return true;
+                    };
+
+                    get command() {
+                        return null;
+                    };
+                });
+            }
+            const result = await cmd.run(runArg);
             if (result.error) {
                 if (config.errors.log) printer.error(`An error occurred while running ${cmd.file}`);
                 const errorStack = result.tmp !== undefined ? commandLikeFormatError(result.error, result.tmp, cmd.file, -1) : result.error;
@@ -274,7 +400,7 @@ global.ConsoleReader = class ConsoleReader {
                 break;
             case InteractionType.ApplicationCommand:
                 const {commandName} = interaction;
-                const commands = (slashCommandCache.get(interaction.guild) || []).filter(i => i[1].name === commandName).map(i => i[0]).filter(cmd => cmd.conf.enabled && (cmd.conf["dmAllowed"] || !!interaction.guild) && (cmd.conf["botAllowed"] || !interaction.user.bot));
+                const commands = (slashCommandCache.get(interaction.guild) || []).filter(i => i[1].name === commandName).map(i => i[0]).map(i => SlashCommandManager.commands[i.file]).filter(cmd => cmd.conf.enabled && (cmd.conf["dmAllowed"] || !!interaction.guild) && (cmd.conf["botAllowed"] || !interaction.user.bot));
                 for (let i = 0; i < commands.length; i++) {
                     /*** @type {SlashCommand} */
                     const cmd = commands[i];
