@@ -121,11 +121,17 @@ global.ConsoleReader = class ConsoleReader {
             printer.clear();
             const currentVersion = require("./package.json")["template-version"] ?? 1;
             if (latestTemplate.version > currentVersion) {
-                // TODO: running the update command to update files, algorithm:
-                // TODO: https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm install zip discord.js@latest
-                // TODO: require() the setup.js
-                // TODO: npm uninstall zip
-                printer.warn(...latestTemplate["message"].map(i => i.replaceAll("%latest.version%", latestTemplate.version).replaceAll("%current.version%", currentVersion)));
+                //printer.warn(...latestTemplate["message"].map(i => i.replaceAll("%latest.version%", latestTemplate.version).replaceAll("%current.version%", currentVersion)));
+                printer.constructor.line = "";
+                printer.info("Do you want to update the template automatically? (y/n) ");
+                printer.constructor.line = "\n";
+                const updateRes = await ConsoleReader.readLine({show: false});
+                printer.clear();
+                if(updateRes === "y") {
+                    await executeTerminalCommand(`https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm install zip discord.js@latest`);
+                    await require("./setup.js");
+                    process.exit();
+                } else printer.info("You cancelled the auto update.");
             } else printer.notice("Your template is up to date!");
         } catch (e) {
             printer.clear();
@@ -147,6 +153,7 @@ global.ConsoleReader = class ConsoleReader {
         printer.info("Please enter your Discord token: ");
         printer.constructor.line = "\n";
         config.token = await ConsoleReader.readLine({show: false});
+        printer.clear();
         fs.writeFileSync(path.join(__dirname, "config.json"), JSON.stringify(config, null, 2));
     }
     const loginResponse = await new Promise(r => client.login(config.token).then(_ => r({success: true})).catch(error => r({error})));

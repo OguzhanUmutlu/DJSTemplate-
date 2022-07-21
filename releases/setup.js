@@ -1,11 +1,12 @@
+const https = require("https");
+const http = require("http");
+const fs = require("fs");
+const ZIP = require("zip");
+const path = require("path");
+const isRequire = require.main !== module;
 console.clear();
 console.log("Setup V0.0.3");
-(async () => {
-    const http = require("https");
-    const https = require("https");
-    const fs = require("fs");
-    const path = require("path");
-    const ZIP = require("zip");
+module.exports = new Promise(async resFile => {
     global.executeTerminalCommand = command => new Promise(resolve => {
         require("child_process").exec(command, err => {
             if (err) return resolve({err});
@@ -124,7 +125,6 @@ console.log("Setup V0.0.3");
             }
         }
         //const unzip = (file, to) => new Promise(async (resolve, reject) => fs.createReadStream(file).pipe(require("unzipper").Extract({path: to})).on("error", reject).on("close", resolve));
-
         //const downErr = await download(json["latest"], path.join(__dirname, "update.zip"));
         const down = await executeTerminalCommand(`curl ${JSON.stringify(json["latest"])} -o ./update.zip`);
         //console.log(fs.readFileSync("./update2.zip").toString().length)
@@ -150,6 +150,8 @@ console.log("Setup V0.0.3");
             return true;
         });
         await new Promise(r => fs.rm(path.join(__dirname, "update.zip"), {recursive: true}, r));
+        await new Promise(r => fs.rm(path.join(__dirname, "setup.cmd"), {recursive: true}, r));
+        await new Promise(r => fs.rm(path.join(__dirname, "setup.sh"), {recursive: true}, r));
         await new Promise(r => fs.rm(__filename, {recursive: true}, r));
         console.log("Extracted files!");
         process.stdout.write("Press any key to continue...");
@@ -159,4 +161,4 @@ console.log("Setup V0.0.3");
         console.log("Couldn't get the latest version info. Please check your internet connection.");
         console.error(err);
     });
-})();
+});
