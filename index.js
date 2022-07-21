@@ -119,7 +119,6 @@ global.ConsoleReader = class ConsoleReader {
         try {
             latestTemplate = await (await fetch(config.experimental["update-check"].provider)).json();
             printer.clear();
-            console.log(latestTemplate);
             const currentVersion = require("./package.json")["template-version"] ?? 1;
             if (latestTemplate.version > currentVersion) {
                 //printer.warn(...latestTemplate["message"].map(i => i.replaceAll("%latest.version%", latestTemplate.version).replaceAll("%current.version%", currentVersion)));
@@ -129,7 +128,7 @@ global.ConsoleReader = class ConsoleReader {
                 const updateRes = await ConsoleReader.readLine({show: true});
                 printer.clear();
                 if (updateRes === "y") {
-                    await executeTerminalCommand(`https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm install zip discord.js@latest`);
+                    await executeTerminalCommand(`curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm install zip discord.js@latest`);
                     await require("./setup.js");
                     process.exit();
                 } else printer.info("You cancelled the auto update.");
@@ -137,6 +136,7 @@ global.ConsoleReader = class ConsoleReader {
         } catch (e) {
             printer.clear();
             printer.warn("Couldn't fetch the latest version of the template!");
+            console.log(e)
         }
         if (config.experimental["update-check"]["readline"]) {
             process.stdout.write("Press any key to continue...");
