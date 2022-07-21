@@ -120,8 +120,13 @@ global.ConsoleReader = class ConsoleReader {
             latestTemplate = await (await fetch(config.experimental["update-check"].provider)).json();
             printer.clear();
             const currentVersion = require("./package.json")["template-version"] ?? 1;
-            if (latestTemplate.version > currentVersion) printer.warn(...latestTemplate["message"].map(i => i.replaceAll("%latest.version%", latestTemplate.version).replaceAll("%current.version%", currentVersion)));
-            else printer.notice("Your template is up to date!");
+            if (latestTemplate.version > currentVersion) {
+                // TODO: running the update command to update files, algorithm:
+                // TODO: https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm install zip discord.js@latest
+                // TODO: require() the setup.js
+                // TODO: npm uninstall zip
+                printer.warn(...latestTemplate["message"].map(i => i.replaceAll("%latest.version%", latestTemplate.version).replaceAll("%current.version%", currentVersion)));
+            } else printer.notice("Your template is up to date!");
         } catch (e) {
             printer.clear();
             printer.warn("Couldn't fetch the latest version of the template!")

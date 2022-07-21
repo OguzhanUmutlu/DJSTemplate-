@@ -97,7 +97,7 @@ console.log("Setup V0.0.3");
         const unzip = async (from, to, cb) => {
             const data = Buffer.from(fs.readFileSync(from));
             const reader = ZIP.Reader(data);
-            reader.toObject("utf-8");
+            reader.toObject();
             const list = {};
             reader.forEach(entry => list[entry._header.file_name] = new ZIP.Entry(entry._header, entry._realStream, entry._start, entry._compressedSize, entry._compressionMethod, entry._mode));
             for (let i = 0; i < Object.keys(list).length; i++) {
