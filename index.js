@@ -136,7 +136,7 @@ global.ConsoleReader = class ConsoleReader {
             } else printer.notice("Your template is up to date!");
         } catch (e) {
             printer.clear();
-            printer.warn("Couldn't fetch the latest version of the template!")
+            printer.warn("Couldn't fetch the latest version of the template!");
         }
         if (config.experimental["update-check"]["readline"]) {
             process.stdout.write("Press any key to continue...");
