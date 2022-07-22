@@ -894,4 +894,4 @@ client.on("interactionCreate", interaction => {
     if (interaction instanceof ButtonInteraction) ButtonHelper.registered.filter(b => b[0] === interaction.customId).forEach(i => i[1](interaction));
     if (interaction instanceof ModalSubmitInteraction) ModalHelper.registered.filter(m => m[0] === interaction.customId).forEach(i => i[1](interaction));
 });
-client.on("messageReactionAdd", (reaction, user) => ReactionHelper.registered.filter(EMPTY_CALLBACK[0].id === reaction.message.id && r[1].id === reaction.id).forEach(i => i[2](user)));
+client.on("messageReactionAdd", (reaction, user) => ReactionHelper.registered.filter(r => EMPTY_CALLBACK[0].id === reaction.message.id && r[1].id === reaction.id).forEach(i => i[2](user)));
