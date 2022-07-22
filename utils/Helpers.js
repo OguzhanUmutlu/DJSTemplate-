@@ -885,6 +885,11 @@ global.CooldownHelper = new CooldownHelper();
 global.AsyncLoop = AsyncLoop;
 global.repeat = repeat;
 global.wait = ms => new Promise(r => setTimeout(r, ms));
+global.generatePassword = (length, {
+    numbers = true,
+    upperCase = true,
+    lowerCase = true
+} = {}) => [..." ".repeat(length)].map(_ => [...(lowerCase ? ([..." ".repeat(122 - 97)].map((_, j) => String.fromCharCode(j + 97))) : []), ...(upperCase ? ([..." ".repeat(90 - 65)].map((_, j) => String.fromCharCode(j + 65))) : []), ...(numbers ? [..." ".repeat(10)].map((_, j) => j) : [])]).map(i => i[Math.floor(Math.random() * i.length)]).join("");
 client.on("interactionCreate", interaction => {
     if (interaction instanceof ButtonInteraction) ButtonHelper.registered.filter(b => b[0] === interaction.customId).forEach(i => i[1](interaction));
     if (interaction instanceof ModalSubmitInteraction) ModalHelper.registered.filter(m => m[0] === interaction.customId).forEach(i => i[1](interaction));

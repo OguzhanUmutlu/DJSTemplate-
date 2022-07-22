@@ -30,7 +30,7 @@ global.ConfigReader = class ConfigReader {
 
     static format(text) {
         printer.error("Config formatting hasn't been implemented yet!");
-        // TODO: make it so it will be like key-value table which keys are centered in themselves and same for values.
+        // TODO: make it, so it will be like key-value table which keys are centered in themselves and same for values.
         return undefined;
     };
 };

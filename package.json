@@ -1,7 +1,7 @@
 {
   "name": "djstemplate",
-  "version": "2.0.0",
-  "template-version": 2,
+  "version": "3.0.0",
+  "template-version": 3,
   "description": "An easy to use discord.js template!",
   "main": "index.js",
   "scripts": {

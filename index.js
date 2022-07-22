@@ -144,7 +144,7 @@ global.ConsoleReader = class ConsoleReader {
     }
     printer.clear();
     const {Client, Guild, InteractionType} = Discord;
-    global.client = new Client({intents: [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536]});
+    global.client = new Client({intents: Object.values(Discord["GatewayIntentBits"]).filter(i => !isNaN(i * 1))});
     printer.info("Connecting to Discord...");
     const ready = new Promise(r => client.once("ready", r));
     while (!config.token) {
@@ -160,13 +160,30 @@ global.ConsoleReader = class ConsoleReader {
     if (loginResponse.error) {
         switch (loginResponse.error.code) {
             case "TokenInvalid":
-                return printer.error("Invalid token!")
+                return printer.error("Invalid token!");
             case "ENOTFOUND":
-                return printer.error("You don't have internet connection!");
+                return printer.error("Is discord down?\nhttps://discordstatus.com\nhttps://downdetector.com/status/discord");
+            case "DisallowedIntents":
+                return printer.error("Some intents you have activated in the Client constructor are not enabled in the developer screen.\nBe sure to enable " + printer.constructor.FgMagenta + "Privileged Gateway Intents" + printer.constructor.FgRed + " in the page: " + printer.constructor.FgMagenta + "https://discord.com/developers/applications");
             default:
                 return printer.error("Failed to log in to Discord! Error code: " + loginResponse.error.code);
         }
     }
+    const isDestroyed = () => client.ws["destroyed"];
+    const isReconnecting = () => client.ws["reconnecting"];
+    let st = {destroyed: isDestroyed(), reconnecting: isReconnecting()};
+    setInterval(() => {
+        if (st.destroyed !== isDestroyed()) {
+            st.destroyed = isDestroyed();
+            if (st.destroyed) printer.error("Web socket has been destroyed.");
+            else printer.error("Web socket has been recovered."); // which is probably impossible in this case
+        }
+        if (st.reconnecting !== isReconnecting()) {
+            st.reconnecting = isReconnecting();
+            if (st.reconnecting) printer.warn("Reconnecting...");
+            else printer.warn("Connected!");
+        }
+    });
     const ______ = config.token;
     if (config["hide-token"]) {
         delete config.token;
@@ -455,6 +472,7 @@ global.ConsoleReader = class ConsoleReader {
             return {success: false, error: e};
         }
     };
+    client.on("guildCreate", guild => updateCommandsForGuild(guild, Object.values(SlashCommandManager.commands)));
     const updateCommandForGuilds = async commands => {
         printer.info("Sending slash command packets to guilds...");
         commands = commands.filter(c => c.conf.enabled);
@@ -560,5 +578,11 @@ global.ConsoleReader = class ConsoleReader {
         } catch (e) {
         }
     }, config.config["auto-reload"].interval).then(r => r);
-    const globals = ["config", "printer", "EmbedHelper", "WhiteListHelper", "BlackListHelper", "CooldownHelper", "AsyncLoop", "repeat", "wait", "translateStatic"];
+    const glob = [
+        "config", "printer", "Discord", "fs", "readFileAsync", "getUniqueId", "executeTerminalCommand",
+        "mkdir", "ConsoleReader", "rmTmp", "mkTmp", "client", "getPrefixFromGuild", "getLanguageFromGuild",
+        "ConfigReader", "StopException", "Command", "CommandManager", "PrefixCommand", "PrefixCommandManager",
+        "SlashCommand", "SlashCommandManager", "EventManager", "ModalHelper", "EmbedHelper", "WhiteListHelper",
+        "BlackListHelper", "CooldownHelper", "AsyncLoop", "repeat", "wait", "generatePassword", "translateStatic"
+    ];
 })();
