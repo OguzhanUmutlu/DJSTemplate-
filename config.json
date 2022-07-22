@@ -58,7 +58,7 @@
     "debug": true
   },
   "experimental": {
-    "command-run-method": "file",
+    "command-run-method": "eval",
     "file-eval-remove": true,
     "update-check": {
       "enabled": true,

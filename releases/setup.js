@@ -95,10 +95,10 @@ module.exports = new Promise(async resFile => {
         };
     }
 
-    get("https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/UPDATE.json").then(async data => {
+    get("https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/UPDATE.json").then(async updateData => {
         let json;
         try {
-            json = JSON.parse(data.toString());
+            json = JSON.parse(updateData.toString());
         } catch (err) {
             console.log("Couldn't parse the JSON file from the latest version info!");
             console.error(err);
@@ -154,6 +154,9 @@ module.exports = new Promise(async resFile => {
         await new Promise(r => fs.rm(path.join(__dirname, "update.zip"), {recursive: true}, r));
         await new Promise(r => fs.rm(path.join(__dirname, "setup.cmd"), {recursive: true}, r));
         await new Promise(r => fs.rm(path.join(__dirname, "setup.sh"), {recursive: true}, r));
+        const pc = require("./package.json");
+        pc["template-version"] = json.version;
+        fs.writeFileSync("./package.json", JSON.stringify(pc, null, 2));
         await new Promise(r => fs.rm(__filename, {recursive: true}, r));
         console.log("Extracted files!");
         process.stdout.write("Press any key to continue...");
