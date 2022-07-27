@@ -165,6 +165,8 @@ global.ConsoleReader = class ConsoleReader {
                 return printer.error("Is discord down?\nhttps://discordstatus.com\nhttps://downdetector.com/status/discord");
             case "DisallowedIntents":
                 return printer.error("Some intents you have activated in the Client constructor are not enabled in the developer screen.\nBe sure to enable " + printer.constructor.FgMagenta + "Privileged Gateway Intents" + printer.constructor.FgRed + " in the page: " + printer.constructor.FgMagenta + "https://discord.com/developers/applications");
+            case "ECONNRESET":
+                return printer.error("Connection has been reset.");
             default:
                 return printer.error("Failed to log in to Discord! Error code: " + loginResponse.error.code);
         }
