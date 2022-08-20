@@ -9,11 +9,11 @@ An easy-to-use discord.js template!
 - Run this line of code to download DJS Template:
   - For windows:
 ```shell
-curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.cmd | cmd
+curl https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.cmd | cmd
 ```
   - For mac/linux:
 ```shell
-curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.sh | sh
+curl https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.sh | sh
 ``` 
 
 # Requirements
