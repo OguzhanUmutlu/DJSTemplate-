@@ -62,7 +62,7 @@
     "file-eval-remove": true,
     "update-check": {
       "enabled": true,
-      "provider": "https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/UPDATE.json",
+      "provider": "https://oguzhanumutlu.github.io/DJSTemplate/UPDATE.json",
       "readline": true
     },
     "dns-check": "google.com"

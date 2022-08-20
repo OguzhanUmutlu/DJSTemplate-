@@ -260,8 +260,20 @@ const ___________ = (str, __________variables) => eval(str);
                 subCommandGroup = interaction.options.getSubcommandGroup(false);
                 for (let i = 0; i < optionData.length; i++) {
                     const opt = optionData[i];
-                    args[opt.name] = opt.value;
+                    if (opt.type === 1) {
+                        args[opt.name] = {};
+                        for (let j = 0; j < opt.options.length; j++) args[opt.name] = opt.value;
+                    } else if (opt.type === 2) {
+                        args[opt.name] = {};
+                        for (let j = 0; j < opt.options.length; j++) {
+                            const opt2 = opt.options[j];
+                            args[opt.name][opt2.name] = {};
+                            for (let k = 0; k < opt2.options.length; k++) args[opt.name][opt2.name][opt2.options[k].name] = opt2.options[k].value;
+                        }
+                    } else args[opt.name] = opt.value;
                 }
+                if (subCommandGroup) args = args[subCommandGroup];
+                if (subCommand) args = args[subCommand];
             }
             return await super.run({
                 interaction, channel, guild, language, structure,

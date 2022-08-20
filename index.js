@@ -128,13 +128,14 @@ global.ConsoleReader = class ConsoleReader {
                 const updateRes = await ConsoleReader.readLine({show: true});
                 printer.clear();
                 if (updateRes === "y") {
-                    await executeTerminalCommand(`curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js && npm install zip discord.js@latest`);
+                    await executeTerminalCommand(`curl https://oguzhanumutlu.github.io/DJSTemplate/setup.js -o setup.js && npm install zip discord.js@latest`);
                     await require("./setup.js");
                     process.exit();
                 } else printer.info("You cancelled the auto update.");
             } else printer.notice("Your template is up to date!");
         } catch (e) {
             printer.clear();
+            console.log(e);
             printer.warn("Couldn't fetch the latest version of the template!");
         }
         if (config.experimental["update-check"]["readline"]) {
