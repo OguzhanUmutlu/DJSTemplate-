@@ -1,4 +1,4 @@
-curl https://raw.githubusercontent.com/OguzhanUmutlu/DJSTemplate/main/releases/setup.js -o setup.js
+curl https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.js -o setup.js
 npm init -y
 clear
 echo "Downloading ZIP dependency..."
