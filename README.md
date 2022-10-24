@@ -13,7 +13,7 @@ curl https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.cmd | cmd
 ```
   - For mac/linux:
 ```shell
-curl https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.sh | sh
+curl https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.sh | bash
 ``` 
 
 # Requirements

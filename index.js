@@ -472,6 +472,7 @@ global.ConsoleReader = class ConsoleReader {
             return {success: true};
         } catch (e) {
             printer.info("Couldn't send the slash command packets to the guild with the ID " + guild.id);
+            if (config.errors["command-update-errors"]) printer.error(e);
             return {success: false, error: e};
         }
     };

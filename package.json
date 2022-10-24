@@ -1,7 +1,7 @@
 {
   "name": "djstemplate",
-  "version": "3.0.5",
-  "template-version": 7,
+  "version": "3.0.6",
+  "template-version": 8,
   "description": "An easy to use discord.js template!",
   "main": "index.js",
   "scripts": {
@@ -29,5 +29,8 @@
   "homepage": "https://github.com/OguzhanUmutlu/DJSTemplate#readme",
   "dependencies": {
     "discord.js": "^14.0.3"
+  },
+  "devDependencies": {
+    "jszip": "^3.10.1"
   }
 }

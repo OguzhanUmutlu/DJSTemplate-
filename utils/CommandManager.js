@@ -260,16 +260,18 @@ const ___________ = (str, __________variables) => eval(str);
                 subCommandGroup = interaction.options.getSubcommandGroup(false);
                 for (let i = 0; i < optionData.length; i++) {
                     const opt = optionData[i];
-                    if (opt.type === 1) {
+                    if (opt.type === 1) { // subcommand
                         args[opt.name] = {};
                         for (let j = 0; j < opt.options.length; j++) args[opt.name] = opt.value;
-                    } else if (opt.type === 2) {
+                    } else if (opt.type === 2) { // subcommand group
                         args[opt.name] = {};
                         for (let j = 0; j < opt.options.length; j++) {
                             const opt2 = opt.options[j];
                             args[opt.name][opt2.name] = {};
                             for (let k = 0; k < opt2.options.length; k++) args[opt.name][opt2.name][opt2.options[k].name] = opt2.options[k].value;
                         }
+                    } else if (opt.type === 11) { // attachment
+                        args[opt.name] = opt.attachment;
                     } else args[opt.name] = opt.value;
                 }
                 if (subCommandGroup) args = args[subCommandGroup];
