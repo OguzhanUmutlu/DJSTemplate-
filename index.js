@@ -128,7 +128,7 @@ global.ConsoleReader = class ConsoleReader {
                 const updateRes = await ConsoleReader.readLine({show: true});
                 printer.clear();
                 if (updateRes === "y") {
-                    await executeTerminalCommand(`curl https://oguzhanumutlu.github.io/DJSTemplate/setup.js -o setup.js && npm install zip discord.js@latest`);
+                    await executeTerminalCommand(`curl https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.js -o setup.js && npm install zip discord.js@latest`);
                     await require("./setup.js");
                     process.exit();
                 } else printer.info("You cancelled the auto update.");

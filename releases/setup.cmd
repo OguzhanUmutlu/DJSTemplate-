@@ -1,1 +1,1 @@
-title V14 Discord.JS Template && curl https://oguzhanumutlu.github.io/DJSTemplate/setup.js -o setup.js && npm init -y && npm install zip && node setup.js && npm install && node index.js
+title V14 Discord.JS Template && curl https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.js -o setup.js && npm init -y && npm install zip && node setup.js && npm install && node index.js
