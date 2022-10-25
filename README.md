@@ -9,7 +9,7 @@ An easy-to-use discord.js template!
 - Run this line of code to download DJS Template:
   - For windows:
 ```shell
-curl https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.cmd | cmd
+curl -O https://oguzhanumutlu.github.io/DJSTemplate/releases/setup.cmd && setup
 ```
   - For mac/linux:
 ```shell

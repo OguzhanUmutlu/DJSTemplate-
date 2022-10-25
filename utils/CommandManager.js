@@ -130,7 +130,7 @@ const ___________ = (str, __________variables) => eval(str);
         /*** @param {Command} command */
         addCommand(command) {
             if (!command) return;
-            this.commands[command.file] = command;
+            return this.commands[command.file] = command;
         };
 
         /*** @param {Command | string} fileOrCommand */
@@ -144,7 +144,7 @@ const ___________ = (str, __________variables) => eval(str);
         };
 
         async addFile(file) {
-            this.addCommand(await this.loadFile(file));
+            return this.addCommand(await this.loadFile(file));
         };
     }
 
@@ -387,13 +387,16 @@ const ___________ = (str, __________variables) => eval(str);
                 }
             }];
             client.on(event.lastSign[0], event.lastSign[1]);
-            this.events[event.file] = event;
+            return this.events[event.file] = event;
         };
 
         /*** @param {Event | Object | string} fileOrEvent */
         removeEvent(fileOrEvent) {
             if (!(fileOrEvent instanceof Event)) fileOrEvent = this.events[fileOrEvent];
-            if (fileOrEvent.lastSign) client.off(fileOrEvent.lastSign[0], fileOrEvent.lastSign[1]);
+            if (fileOrEvent.lastSign) {
+                // noinspection JSUnresolvedFunction
+                client.off(fileOrEvent.lastSign[0], fileOrEvent.lastSign[1]);
+            }
             fileOrEvent.lastSign = null;
             delete this.events[fileOrEvent.file];
         };
@@ -403,7 +406,7 @@ const ___________ = (str, __________variables) => eval(str);
         };
 
         async addFile(file) {
-            this.addEvent(await this.loadFile(file));
+            return this.addEvent(await this.loadFile(file));
         };
     }
 

@@ -122,9 +122,9 @@ global.ConsoleReader = class ConsoleReader {
             const currentVersion = require("./package.json")["template-version"] ?? 1;
             if (latestTemplate.version > currentVersion) {
                 //printer.warn(...latestTemplate["message"].map(i => i.replaceAll("%latest.version%", latestTemplate.version).replaceAll("%current.version%", currentVersion)));
-                printer.constructor.line = "";
+                Printer.line = "";
                 printer.info("There is an update in template, do you want to update the template automatically? (y/n) ");
-                printer.constructor.line = "\n";
+                Printer.line = "\n";
                 const updateRes = await ConsoleReader.readLine({show: true});
                 printer.clear();
                 if (updateRes === "y") {
@@ -150,9 +150,9 @@ global.ConsoleReader = class ConsoleReader {
     const ready = new Promise(r => client.once("ready", r));
     while (!config.token) {
         printer.clear();
-        printer.constructor.line = "";
+        Printer.line = "";
         printer.info("Please enter your bot's Discord token: ");
-        printer.constructor.line = "\n";
+        Printer.line = "\n";
         config.token = await ConsoleReader.readLine({show: false});
         printer.clear();
         fs.writeFileSync(path.join(__dirname, "config.json"), JSON.stringify(config, null, 2));
@@ -582,6 +582,7 @@ global.ConsoleReader = class ConsoleReader {
         } catch (e) {
         }
     }, config.config["auto-reload"].interval).then(r => r);
+    Object.values(EventManager.events).forEach(i => i.conf.name === "ready" && i.run());
     const glob = [
         "config", "printer", "Discord", "fs", "readFileAsync", "getUniqueId", "executeTerminalCommand",
         "mkdir", "ConsoleReader", "rmTmp", "mkTmp", "client", "getPrefixFromGuild", "getLanguageFromGuild",

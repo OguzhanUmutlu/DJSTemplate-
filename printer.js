@@ -82,3 +82,4 @@ class Printer {
 }
 
 global.printer = new Printer();
+global.Printer = Printer;
