@@ -6,7 +6,17 @@ global.ConfigReader = class ConfigReader {
      */
     static read(string, file) {
         string = string.replace(/\r\n/g, "\n");
-        const comments = Array.from(string.matchAll(/^(( *\/\*+\n( *\*? *.+\n)+ *\*+\/)|( *\/\/+ *@.+))/gm)).map(i => i[0].replace(/^ +/gm, ""));
+        const matchArrayFrom = iterator => {
+            let done = false;
+            const list = [];
+            while (!done) {
+                const i = iterator.next();
+                if (i.done) done = true;
+                list.push(i.value);
+            }
+            return list;
+        }
+        const comments = matchArrayFrom(string.matchAll(/^(( *\/\*+\n( *\*? *.+\n)+ *\*+\/)|( *\/\/+ *@.+))/gm)).map(i => i[0].replace(/^ +/gm, ""));
         const conf = {};
         for (let i = 0; i < comments.length; i++) {
             const comment = comments[i];

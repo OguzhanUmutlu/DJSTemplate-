@@ -1,1 +1,29 @@
-{"version":9,"message":["----------------- DJS V14 Template -----------------","A new update has been detected!","Your Version: %current.version%","Latest Version: %latest.version%","Changelog: https://github.com/OguzhanUmutlu/DJSTemplate/CHANGELOG.md","Download: https://github.com/OguzhanUmutlu/DJSTemplate","----------------- DJS V14 Template -----------------"],"latest":"https://oguzhanumutlu.github.io/DJSTemplate/releases/latest.zip","file_names":["auto.js","cli.js","config.json","index.js","LICENSE","package.json","printer.js","README.md","utils/LanguageManager.js","utils/IDE.js","utils/Helpers.js","utils/ConfigReader.js","utils/CommandManager.js"],"files":[]}
+{
+  "version": 10,
+  "message": [
+    "----------------- DJS V14 Template -----------------",
+    "A new update has been detected!",
+    "Your Version: %current.version%",
+    "Latest Version: %latest.version%",
+    "Changelog: https://github.com/OguzhanUmutlu/DJSTemplate/CHANGELOG.md",
+    "Download: https://github.com/OguzhanUmutlu/DJSTemplate",
+    "----------------- DJS V14 Template -----------------"
+  ],
+  "latest": "https://oguzhanumutlu.github.io/DJSTemplate/releases/latest.zip",
+  "file_names": [
+    "auto.js",
+    "cli.js",
+    "config.json",
+    "index.js",
+    "LICENSE",
+    "package.json",
+    "printer.js",
+    "README.md",
+    "utils/LanguageManager.js",
+    "utils/IDE.js",
+    "utils/Helpers.js",
+    "utils/ConfigReader.js",
+    "utils/CommandManager.js"
+  ],
+  "files": []
+}
