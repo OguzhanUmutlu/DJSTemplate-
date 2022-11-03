@@ -12,7 +12,7 @@ global.ConfigReader = class ConfigReader {
             while (!done) {
                 const i = iterator.next();
                 if (i.done) done = true;
-                list.push(i.value);
+                if (i.value) list.push(i.value);
             }
             return list;
         }
