@@ -2,6 +2,8 @@
 
 An easy-to-use discord.js template!
 
+[![](https://img.shields.io/badge/Discord-black?style=for-the-badge&logo=discord)](https://discord.gg/emAhrw3mvM)
+
 # Setup
 
 - Open your project directory in a command prompt or a terminal using `cd` command.
